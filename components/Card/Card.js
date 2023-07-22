@@ -1,67 +1,53 @@
-import {View, StyleSheet,ScrollView,Text} from 'react-native';
 import React from 'react';
+import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import {useSelector} from 'react-redux';
 
 export default function Card() {
-  const userData =useSelector(state => state.cslice);
+  const data = useSelector(state => state.persistedReducer);
+
   return (
-    <View >
-      <ScrollView>
-        {Object.values(userData).map((item) => (
-          <View
-            key={item.id}
-            style={
-              styles.amounContainer}>
-            <View style={styles.detailContainer}>
-              <View>
-                <Text style={styles.normalText}>Name</Text>
-                <Text style={styles.dataText}>{item.name}</Text>
-              </View>
-
-              <View>
-                <Text style={styles.normalText}>Number</Text>
-                <Text style={styles.dataText}>{item.number}</Text>
-              </View>
-
-              <View>
-                <Text style={styles.normalText}>Account Number</Text>
-                <Text style={styles.dataText}>{item.accountNumber}</Text>
-              </View>
-
-              {/* <View>
-                <Text style={styles.normalText}>Credit</Text>
-                <Text style={styles.dataText}>
-                  {userData.credit === true ? (
-                    <Text style={styles.dataText}>True</Text>
-                  ) : (
-                    <Text style={styles.dataText}>False</Text>
-                  )}
-                </Text>
-              </View> */}
+    <ScrollView contentContainerStyle={styles.container}>
+      {data?.map((item )=> (
+        <View key={item.id} style={{flex:1,backgroundColor:'#823e3e'}}>
+          <View >
+            <View>
+              <Text style={styles.normalText}>Name</Text>
+              <Text style={styles.dataText}>{item.name}</Text>
             </View>
-
-            <View style={styles.amount}>
-              <View style={{flex:1}} >
-                <Text style={styles.normalText}>Amount</Text>
-                <Text style={styles.dataText}>{userData.amount}</Text>
-              </View>
+            <View>
+              <Text style={styles.normalText}>Number</Text>
+              <Text style={styles.dataText}>{item.number}</Text>
+            </View>
+            <View>
+              <Text style={styles.normalText}>Account Number</Text>
+              <Text style={styles.dataText}>{item.accountNumber}</Text>
             </View>
           </View>
-        ))}
-      </ScrollView>
-      
-
-    </View>
+          <View style={styles.amount}>
+            <View style={styles.amountInner}>
+              <Text style={styles.normalText}>Amount</Text>
+              <Text style={styles.dataText}>{item.amount}</Text>
+            </View>
+          </View>
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    paddingVertical: 10,
+  },
   normalText: {
     fontSize: 15,
+    color: 'white',
   },
   dataText: {
     fontSize: 30,
     fontWeight: 'bold',
+    color: 'white',
   },
   amounContainer: {
     margin: 10,
@@ -69,11 +55,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor:'#41349a'
+    backgroundColor: '#41349a',
   },
   detailContainer: {},
   amount: {
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  amountInner: {
+    flex: 1,
     alignItems: 'center',
   },
 });

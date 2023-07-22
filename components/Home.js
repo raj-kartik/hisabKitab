@@ -9,7 +9,7 @@ import React,{useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredit } from '../Redux/CreditDebitRedux/CSlice';
 import { useNavigation } from '@react-navigation/native';
-
+import DeviceInfo from 'react-native-device-info';
 
 
 export default function Home() {
@@ -26,7 +26,8 @@ export default function Home() {
     credit:true
   })
   const handleButton = ()=>{
-  
+      let uniqueId = DeviceInfo.getUniqueId();
+      handleTextChange('id',uniqueId);
       dispatch(setCredit(details));
       setDetails({
         id: '',
@@ -48,7 +49,6 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.credDeb}>
-        
         <View style={styles.InputDetail}>
           <Text style={styles.context}>Name</Text>
           <TextInput
@@ -57,17 +57,6 @@ export default function Home() {
             placeholder="Mukesh"
             placeholderTextColor={'#776d6d'}
             onChangeText={text => handleTextChange('name', text)}
-          />
-        </View>
-
-        <View style={styles.InputDetail}>
-          <Text style={styles.context}>email</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="abc@gmail.com"
-            placeholderTextColor={'#776d6d'}
-            value={details.id}
-            onChangeText={text => handleTextChange('id', text)}
           />
         </View>
 
@@ -153,13 +142,21 @@ export default function Home() {
 
       <TouchableOpacity style={styles.bSubmit} onPress={() => handleButton()}>
         <View style={{padding: 10}}>
-          <Text style={{fontWeight:'bold'}} >Submit</Text>
+          <Text style={{fontWeight: 'bold'}}>Submit</Text>
         </View>
       </TouchableOpacity>
-      <View style={{backgroundColor:'#413c68',margin:5,padding:15,borderRadius:10,justifyContent:'center',alignItems:'center'}} >
+      <View>
         <TouchableOpacity
+          style={{
+            backgroundColor: '#413c68',
+            margin: 5,
+            padding: 15,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
           onPress={() => navigation.navigate('Transactions')}>
-          <Text style={{fontWeight:'bold'}} >Transactions</Text>
+          <Text style={{fontWeight: 'bold'}}>Transactions</Text>
         </TouchableOpacity>
       </View>
     </View>

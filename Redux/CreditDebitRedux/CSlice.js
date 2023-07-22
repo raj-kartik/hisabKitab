@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
-    inputs:{}
+    inputs:[]
 };
 
 const CSlice = createSlice({
@@ -8,7 +8,7 @@ const CSlice = createSlice({
     initialState,
     reducers:{
         setCredit(state,action){
-            state.inputs = action.payload;
+            state.inputs = [...state.inputs,action.payload];
             console.log(state.inputs);
         },
     },
